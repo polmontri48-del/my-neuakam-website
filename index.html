@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neuakam - อำเภอเนินขาม จังหวัดชัยนาท | Noen Kham District, Chai Nat</title>
+    <meta name="description" content="แหล่งท่องเที่ยวเชิงวัฒนธรรมและธรรมชาติ อำเภอเนินขาม จังหวัดชัยนาท">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Prompt', sans-serif;
+        }
+        
+        .hero-pattern {
+            background-color: #e8f3f0;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(74, 93, 35, .05) 35px, rgba(74, 93, 35, .05) 70px);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #059669;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .section-bg {
+            background: linear-gradient(135deg, #d1f4e8 0%, #b8f0e0 100%);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #4a5d23 0%, #059669 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Chatbot styles */
+        .chatbot-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .chatbot-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.6);
+        }
+
+        .chatbot-window {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            display: none;
+            flex-direction: column;
+            z-index: 999;
+        }
+
+        .chatbot-window.active {
+            display: flex;
+        }
+
+        .lang-switch {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            z-index: 100;
+        }
+
+        .booking-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .booking-modal.active {
+            display: flex;
+        }
+
+        /* Scroll Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #059669 0%, #10b981 100%);
+            z-index: 9999;
+            transition: width 0.1s ease;
+        }
+
+        /* Loading Animation */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #e0f2d0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 5px solid #d1f4e8;
+            border-top-color: #059669;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-green-50">
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="text-center">
+            <div class="loader mx-auto mb-4"></div>
+            <p class="text-green-700 font-semibold">กำลังโหลด...</p>
+        </div>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div id="progressBar" class="progress-bar" style="width: 0%"></div>
+
+    <!-- Language Switch -->
+    <div class="lang-switch hidden md:block">
+        <button onclick="switchLanguage('th')" id="lang-th" class="px-4 py-2 bg-white rounded-l-lg border border-green-600 text-green-600 font-medium">ไทย</button>
+        <button onclick="switchLanguage('en')" id="lang-en" class="px-4 py-2 bg-green-600 rounded-r-lg text-white font-medium">EN</button>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-green-600 to-green-700 rounded-full flex items-center justify-center">
+                        <span class="text-white font-bold text-xl">น</span>
+                    </div>
+                    <span class="text-2xl font-bold gradient-text">Neuakam</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="nav-link active text-gray-700 hover:text-green-600 font-medium" data-th="หน้าแรก" data-en="Home">หน้าแรก</a>
+                    <a href="#attractions" class="nav-link text-gray-700 hover:text-green-600 font-medium" data-th="แหล่งท่องเที่ยว" data-en="Attractions">แหล่งท่องเที่ยว</a>
+                    <a href="#food" class="nav-link text-gray-700 hover:text-green-600 font-medium" data-th="อาหารพื้นบ้าน" data-en="Food">อาหารพื้นบ้าน</a>
+                    <a href="#homestay" class="nav-link text-gray-700 hover:text-green-600 font-medium" data-th="ที่พักโฮมสเตย์" data-en="Homestay">ที่พักโฮมสเตย์</a>
+                    <a href="#contact" class="nav-link text-gray-700 hover:text-green-600 font-medium" data-th="ติดต่อเรา" data-en="Contact">ติดต่อเรา</a>
+                </div>
+                <button class="md:hidden" onclick="toggleMenu()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+            <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4">
+                <a href="#home" onclick="toggleMenu()" class="block py-2 text-gray-700 hover:text-green-600">หน้าแรก</a>
+                <a href="#attractions" onclick="toggleMenu()" class="block py-2 text-gray-700 hover:text-green-600">แหล่งท่องเที่ยว</a>
+                <a href="#food" onclick="toggleMenu()" class="block py-2 text-gray-700 hover:text-green-600">อาหารพื้นบ้าน</a>
+                <a href="#homestay" onclick="toggleMenu()" class="block py-2 text-gray-700 hover:text-green-600">ที่พักโฮมสเตย์</a>
+                <a href="#contact" onclick="toggleMenu()" class="block py-2 text-gray-700 hover:text-green-600">ติดต่อเรา</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-pattern py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center">
+                <h1 class="text-5xl md:text-6xl font-bold gradient-text mb-6" data-th="ยินดีต้อนรับสู่เนินขาม" data-en="Welcome to Noen Kham">
+                    ยินดีต้อนรับสู่เนินขาม
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-700 mb-8" data-th="แหล่งท่องเที่ยวเชิงวัฒนธรรมและธรรมชาติ จังหวัดชัยนาท" data-en="Cultural and Natural Tourism in Chai Nat Province">
+                    แหล่งท่องเที่ยวเชิงวัฒนธรรมและธรรมชาติ จังหวัดชัยนาท
+                </p>
+                <div class="max-w-4xl mx-auto">
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                        <img src="./images/vive.png" 
+                             alt="เนินขาม Noen Kham" 
+                             class="w-full h-96 object-cover">
+                        <div class="p-8">
+                            <p class="text-gray-700 text-lg leading-relaxed mb-6" data-th="อำเภอเนินขามเป็นอำเภอหนึ่งของจังหวัดชัยนาท ตั้งอยู่ทางทิศตะวันตกของจังหวัด มีความโดดเด่นทางด้านวัฒนธรรม ประเพณี และวิถีชีวิตชุมชนที่ยังคงสืบทอดมาจนถึงปัจจุบัน พื้นที่ส่วนใหญ่เป็นที่ราบลุ่มแม่น้ำเจ้าพระยา เหมาะแก่การเกษตรกรรม มีแหล่งท่องเที่ยวทางธรรมชาติและวัฒนธรรมที่น่าสนใจมากมาย รวมถึงอาหารพื้นบ้านที่มีเอกลักษณ์เฉพาะตัว และวิถีชีวิตแบบไทยดั้งเดิมที่ยังคงอนุรักษ์ไว้" data-en="Noen Kham is a district in Chai Nat Province, located in the western part of the province. It is distinguished by its culture, traditions, and community way of life that has been preserved to this day. Most of the area is the Chao Phraya River basin, suitable for agriculture. There are many interesting natural and cultural attractions, including unique local cuisine and traditional Thai lifestyles that are still preserved.">
+                                อำเภอเนินขามเป็นอำเภอหนึ่งของจังหวัดชัยนาท ตั้งอยู่ทางทิศตะวันตกของจังหวัด 
+                                มีความโดดเด่นทางด้านวัฒนธรรม ประเพณี และวิถีชีวิตชุมชนที่ยังคงสืบทอดมาจนถึงปัจจุบัน 
+                                พื้นที่ส่วนใหญ่เป็นที่ราบลุ่มแม่น้ำเจ้าพระยา เหมาะแก่การเกษตรกรรม 
+                                มีแหล่งท่องเที่ยวทางธรรมชาติและวัฒนธรรมที่น่าสนใจมากมาย รวมถึงอาหารพื้นบ้านที่มีเอกลักษณ์เฉพาะตัว 
+                                และวิถีชีวิตแบบไทยดั้งเดิมที่ยังคงอนุรักษ์ไว้
+                            </p>
+                            
+                            <!-- Quick Stats -->
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+                                <div class="text-center p-4 bg-green-50 rounded-lg">
+                                    <div class="text-3xl font-bold text-green-600">8+</div>
+                                    <div class="text-sm text-gray-600 mt-1">แหล่งท่องเที่ยว</div>
+                                </div>
+                                <div class="text-center p-4 bg-green-50 rounded-lg">
+                                    <div class="text-3xl font-bold text-green-600">5+</div>
+                                    <div class="text-sm text-gray-600 mt-1">โฮมสเตย์คุณภาพ</div>
+                                </div>
+                                <div class="text-center p-4 bg-green-50 rounded-lg">
+                                    <div class="text-3xl font-bold text-green-600">10+</div>
+                                    <div class="text-sm text-gray-600 mt-1">ร้านอาหารแนะนำ</div>
+                                </div>
+                                <div class="text-center p-4 bg-green-50 rounded-lg">
+                                    <div class="text-3xl font-bold text-green-600">180</div>
+                                    <div class="text-sm text-gray-600 mt-1">กม. จาก กทม.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features/Highlights Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="text-center p-6">
+                    <div class="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2" data-th="แหล่งท่องเที่ยวมากมาย" data-en="Many Attractions">แหล่งท่องเที่ยวมากมาย</h3>
+                    <p class="text-gray-600" data-th="วัด ตลาดน้ำ และแม่น้ำเจ้าพระยาที่สวยงาม" data-en="Temples, floating markets, and beautiful Chao Phraya River">วัด ตลาดน้ำ และแม่น้ำเจ้าพระยาที่สวยงาม</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="text-center p-6">
+                    <div class="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2" data-th="โฮมสเตย์คุณภาพ" data-en="Quality Homestays">โฮมสเตย์คุณภาพ</h3>
+                    <p class="text-gray-600" data-th="ที่พักสะอาด บรรยากาศดี บริการเป็นกันเอง" data-en="Clean accommodation, good atmosphere, friendly service">ที่พักสะอาด บรรยากาศดี บริการเป็นกันเอง</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="text-center p-6">
+                    <div class="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2" data-th="อาหารพื้นบ้านรสเด็ด" data-en="Delicious Local Food">อาหารพื้นบ้านรสเด็ด</h3>
+                    <p class="text-gray-600" data-th="รสชาติต้นตำรับ วัตถุดิบสดใหม่ ราคาไม่แพง" data-en="Authentic taste, fresh ingredients, affordable prices">รสชาติต้นตำรับ วัตถุดิบสดใหม่ ราคาไม่แพง</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Attractions Section -->
+    <section id="attractions" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center gradient-text mb-12" data-th="แหล่งท่องเที่ยว" data-en="Tourist Attractions">แหล่งท่องเที่ยว</h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Attraction 1 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <img src="./images/watkham.png" 
+                         alt="วัดเนินขาม" 
+                         class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">วัดเนินขาม (Wat Noen Kham)</h3>
+                        <p class="text-gray-600 mb-3">
+                            วัดเก่าแก่ที่มีอายุกว่า 200 ปี เป็นศูนย์รวมจิตใจของชาวเนินขาม 
+                            มีพระอุโบสถสถาปัตยกรรมแบบไทยประยุกต์ที่สวยงาม ภายในประดิษฐานพระพุทธรูปศักดิ์สิทธิ์ 
+                            มีจิตรกรรมฝาผนังที่ละเอียดอ่อน และมีพระเจดีย์โบราณที่น่าสนใจ
+                        </p>
+                        <p class="text-sm text-gray-500 mb-4">📍 GPS: 15.1234, 100.1234</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=15.1234,100.1234" 
+                           target="_blank"
+                           class="inline-flex items-center text-green-600 hover:text-green-700 font-medium">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            ดูแผนที่ (View Map)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Attraction 2 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <img src="./images/floatingmarket.png" 
+                         alt="ตลาดน้ำ" 
+                         class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">ตลาดน้ำเนินขาม (Noen Kham Floating Market)</h3>
+                        <p class="text-gray-600 mb-3">
+                            ตลาดน้ำริมแม่น้ำเจ้าพระยาที่เปิดทุกวันเสาร์-อาทิตย์ เวลา 06.00-11.00 น. 
+                            จำหน่ายสินค้าพื้นบ้าน ขนมไทยโบราณ ผลไม้สดจากสวน และอาหารท้องถิ่นรสเด็ด 
+                            บรรยากาศร่มรื่น มีเรือพายชมวิวแม่น้ำ เหมาะกับการมาเที่ยวกับครอบครัว
+                        </p>
+                        <p class="text-sm text-gray-500 mb-4">📍 GPS: 15.1345, 100.1456</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=15.1345,100.1456" 
+                           target="_blank"
+                           class="inline-flex items-center text-green-600 hover:text-green-700 font-medium">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            ดูแผนที่ (View Map)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Attraction 3 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <img src="./images/riverview.png" 
+                         alt="แม่น้ำเจ้าพระยา" 
+                         class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">จุดชมวิวแม่น้ำเจ้าพระยา (Chao Phraya Viewpoint)</h3>
+                        <p class="text-gray-600 mb-3">
+                            จุดชมวิวสวยงามริมแม่น้ำเจ้าพระยา มีทางเดินชมวิว ที่นั่งพักผ่อน 
+                            เหมาะสำหรับชมพระอาทิตย์ตกยามเย็น ถ่ายรูปเก็บบรรยากาศ 
+                            มีเรือท่องเที่ยวให้บริการชมวิวแม่น้ำ เวลา 16.00-19.00 น. ราคาท่านละ 100 บาท
+                        </p>
+                        <p class="text-sm text-gray-500 mb-4">📍 GPS: 15.1456, 100.1567</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=15.1456,100.1567" 
+                           target="_blank"
+                           class="inline-flex items-center text-green-600 hover:text-green-700 font-medium">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            ดูแผนที่ (View Map)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Attraction 4 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <img src="./images/museum.png" 
+                         alt="พิพิธภัณฑ์" 
+                         class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">พิพิธภัณฑ์ท้องถิ่นเนินขาม (Noen Kham Local Museum)</h3>
+                        <p class="text-gray-600 mb-3">
+                            จัดแสดงประวัติศาสตร์ความเป็นมาของอำเภอเนินขาม ศิลปวัฒนธรรม วิถีชีวิตชาวบ้าน 
+                            เครื่องมือเครื่องใช้โบราณ ภาพถ่ายประวัติศาสตร์ 
+                            เปิดทุกวัน เว้นวันจันทร์ เวลา 09.00-16.00 น. ค่าเข้าชม 20 บาท
+                        </p>
+                        <p class="text-sm text-gray-500 mb-4">📍 GPS: 15.1567, 100.1678</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=15.1567,100.1678" 
+                           target="_blank"
+                           class="inline-flex items-center text-green-600 hover:text-green-700 font-medium">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            ดูแผนที่ (View Map)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Attraction 5 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <img src="./images/watchang.png" 
+                         alt="วัดท่าช้าง" 
+                         class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">วัดท่าช้าง (Wat Tha Chang)</h3>
+                        <p class="text-gray-600 mb-3">
+                            วัดโบราณริมแม่น้ำเจ้าพระยา มีศาลาการเปรียญทรงไทยที่สวยงาม 
+                            อายุกว่า 150 ปี เป็นสถาปัตยกรรมแบบไทยประยุกต์ที่หาดูได้ยาก 
+                            มีจิตรกรรมฝาผนังเก่าแก่ และพระพุทธรูปสำคัญหลายองค์
+                        </p>
+                        <p class="text-sm text-gray-500 mb-4">📍 GPS: 15.1678, 100.1789</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=15.1678,100.1789" 
+                           target="_blank"
+                           class="inline-flex items-center text-green-600 hover:text-green-700 font-medium">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            ดูแผนที่ (View Map)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Attraction 6 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <img src="../images/park.png" 
+                         alt="สวนสาธารณะ" 
+                         class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">สวนสาธารณะเนินขาม (Noen Kham Public Park)</h3>
+                        <p class="text-gray-600 mb-3">
+                            สวนสาธารณะขนาดใหญ่ มีพื้นที่สีเขียว ทางเดินจ๊อกกิ้ง สนามกีฬา 
+                            ลานออกกำลังกายกลางแจ้ง และบริเวณจัดกิจกรรมชุมชน 
+                            เปิดบริการ 05.00-20.00 น. ทุกวัน ฟรี ไม่มีค่าใช้จ่าย
+                        </p>
+                        <p class="text-sm text-gray-500 mb-4">📍 GPS: 15.1789, 100.1890</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=15.1789,100.1890" 
+                           target="_blank"
+                           class="inline-flex items-center text-green-600 hover:text-green-700 font-medium">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            ดูแผนที่ (View Map)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- New Attraction 7 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <img src="../images/orchard.png" 
+                         alt="สวนผลไม้" 
+                         class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">สวนผลไม้บ้านเนินขาม (Fruit Orchard)</h3>
+                        <p class="text-gray-600 mb-3">
+                            สวนผลไม้เชิงเกษตรท่องเที่ยว เก็บผลไม้สดได้เอง มีมะม่วง มะนาว ส้มโอ ฝรั่ง 
+                            ตามฤดูกาล มีบริการรับชมกระบวนการปลูกผลไม้ ราคาคิลโลกรัมละ 50-150 บาท 
+                            เปิดทุกวันตั้งแต่ 08.00-17.00 น.
+                        </p>
+                        <p class="text-sm text-gray-500 mb-4">📍 GPS: 15.1890, 100.1991</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=15.1890,100.1991" 
+                           target="_blank"
+                           class="inline-flex items-center text-green-600 hover:text-green-700 font-medium">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            ดูแผนที่ (View Map)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- New Attraction 8 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <img src="../images/ricefield.png" 
+                         alt="นาข้าว" 
+                         class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">ไร่นาวิถีเกษตร (Rice Field Experience)</h3>
+                        <p class="text-gray-600 mb-3">
+                            เรียนรู้วิถีเกษตรกรรม ลงมือทำนาจริง ดำนา เกี่ยวข้าว นวดข้าว 
+                            สัมผัสวิถีชีวิตเกษตรกรไทย มีมัคคุเทศก์ท้องถิ่นคอยให้ความรู้ 
+                            จองล่วงหน้า ราคาท่านละ 300 บาท (รวมอาหารกลางวัน)
+                        </p>
+                        <p class="text-sm text-gray-500 mb-4">📍 GPS: 15.1991, 100.2092</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=15.1991,100.2092" 
+                           target="_blank"
+                           class="inline-flex items-center text-green-600 hover:text-green-700 font-medium">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            ดูแผนที่ (View Map)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Food Section -->
+    <section id="food" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center gradient-text mb-12" data-th="อาหารพื้นบ้าน" data-en="Local Food">อาหารพื้นบ้าน</h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Food 1 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <img src="../images/stickyrice.png" 
+                         alt="ข้าวเหนียวหมูย่าง" 
+                         class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">ข้าวเหนียวหมูย่าง (Sticky Rice with Grilled Pork)</h3>
+                        <p class="text-gray-600 mb-3">
+                            หมูย่างหมักสมุนไพรไทย ย่างจนหอมกรุ่น เสิร์ฟพร้อมข้าวเหนียว น้ำจิ้มแจ่ว และผักสด 
+                            ร้านแนะนำ: ร้านป้าสมหมูย่าง ⭐4.8/5
+                        </p>
+                        <p class="text-green-600 font-bold mb-2">฿60-120</p>
+                        <p class="text-sm text-gray-500 mb-4">📍 GPS: 15.1234, 100.1345</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=15.1234,100.1345" 
+                           target="_blank"
+                           class="inline-flex items-center text-green-600 hover:text-green-700 font-medium">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            </svg>
+                            ค้นหาร้าน (Find Restaurant)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Food 2 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <img src="../images/papayasalad.png" 
+                         alt="ส้มตำ" 
+                         class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">ส้มตำปลาร้า (Papaya Salad)</h3>
+                        <p class="text-gray-600 mb-3">
+                            ส้มตำแบบดั้งเดิม ใช้ปลาร้าแท้จากท้องถิ่น รสชาติจัดจ้าน กลมกล่อม 
+                            ร้านแนะนำ: ส้มตำป้าจันทร์ ⭐4.9/5
+                        </p>
+                        <p class="text-green-600 font-bold mb-2">฿40-80</p>
+                        <p class="text-sm text-gray-500 mb-4">📍 GPS: 15.1345, 100.1456</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=15.1345,100.1456" 
+                           target="_blank"
+                           class="inline-flex items-center text-green-600 hover:text-green-700 font-medium">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            </svg>
+                            ค้นหาร้าน (Find Restaurant)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- More food items... -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <img src="../images/friedfish.png" 
+                         alt="ปลาทอด" 
+                         class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">ปลาทอดน้ำปลา (Fried Fish)</h3>
+                        <p class="text-gray-600 mb-3">
+                            ปลาสดจากแม่น้ำเจ้าพระยา ทอดกรอบ ราดน้ำปลาหวานกลมกล่อม เสิร์ฟร้อนๆ 
+                            ร้านแนะนำ: ครัวริมน้ำป้าแดง ⭐4.7/5
+                        </p>
+                        <p class="text-green-600 font-bold mb-2">฿150-300</p>
+                        <p class="text-sm text-gray-500 mb-4">📍 GPS: 15.1456, 100.1567</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=15.1456,100.1567" 
+                           target="_blank"
+                           class="inline-flex items-center text-green-600 hover:text-green-700 font-medium">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            </svg>
+                            ค้นหาร้าน (Find Restaurant)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- New Food Item -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <img src="../images/boatnoodles.png" 
+                         alt="ก๋วยเตี๋ยวเรือ" 
+                         class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">ก๋วยเตี๋ยวเรือ (Boat Noodles)</h3>
+                        <p class="text-gray-600 mb-3">
+                            ก๋วยเตี๋ยวเรือสูตรดั้งเดิม น้ำซุปเข้มข้น กลมกล่อม เครื่องในสดใหม่ รสชาติจัดจ้าน 
+                            ร้านแนะนำ: ก๋วยเตี๋ยวเรือลุงสมชาย ⭐4.8/5
+                        </p>
+                        <p class="text-green-600 font-bold mb-2">฿15-20/ชาม</p>
+                        <p class="text-sm text-gray-500 mb-4">📍 GPS: 15.1567, 100.1678</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=15.1567,100.1678" 
+                           target="_blank"
+                           class="inline-flex items-center text-green-600 hover:text-green-700 font-medium">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            </svg>
+                            ค้นหาร้าน (Find Restaurant)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Activities Section -->
+    <section class="py-20 bg-gradient-to-br from-green-50 to-green-100">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center gradient-text mb-4" data-th="กิจกรรมที่น่าสนใจ" data-en="Interesting Activities">กิจกรรมที่น่าสนใจ</h2>
+            <p class="text-center text-gray-600 mb-12" data-th="สัมผัสประสบการณ์ท่องเที่ยวแบบใกล้ชิดธรรมชาติและวัฒนธรรมท้องถิ่น" data-en="Experience tourism close to nature and local culture">สัมผัสประสบการณ์ท่องเที่ยวแบบใกล้ชิดธรรมชาติและวัฒนธรรมท้องถิ่น</p>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Activity 1 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <img src="../images/rivercruise.png" 
+                         alt="ล่องเรือ" 
+                         class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <h3 class="text-lg font-bold text-gray-800 mb-2" data-th="ล่องเรือชมวิว" data-en="River Cruise">ล่องเรือชมวิว</h3>
+                        <p class="text-gray-600 text-sm mb-3">ชมความงามของแม่น้ำเจ้าพระยายามเย็น</p>
+                        <div class="flex items-center text-green-600">
+                            <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="text-sm">1-2 ชั่วโมง</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity 2 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <img src="https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=300&h=200&fit=crop" 
+                         alt="ทำนา" 
+                         class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <h3 class="text-lg font-bold text-gray-800 mb-2" data-th="เรียนรู้การทำนา" data-en="Rice Farming">เรียนรู้การทำนา</h3>
+                        <p class="text-gray-600 text-sm mb-3">ลงมือปฏิบัติจริงตั้งแต่ดำนาถึงเกี่ยวข้าว</p>
+                        <div class="flex items-center text-green-600">
+                            <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="text-sm">3-4 ชั่วโมง</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity 3 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <img src="../images/cycling.png" 
+                         alt="ปั่นจักรยาน" 
+                         class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <h3 class="text-lg font-bold text-gray-800 mb-2" data-th="ปั่นจักรยานชมทุ่งนา" data-en="Cycling Tour">ปั่นจักรยานชมทุ่งนา</h3>
+                        <p class="text-gray-600 text-sm mb-3">ปั่นชมวิวทุ่งนาและชุมชนท้องถิ่น</p>
+                        <div class="flex items-center text-green-600">
+                            <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="text-sm">2-3 ชั่วโมง</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity 4 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <img src="../images/cookingclass.png" 
+                         alt="ทำอาหาร" 
+                         class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <h3 class="text-lg font-bold text-gray-800 mb-2" data-th="เรียนทำอาหารพื้นบ้าน" data-en="Cooking Class">เรียนทำอาหารพื้นบ้าน</h3>
+                        <p class="text-gray-600 text-sm mb-3">ลงมือทำอาหารไทยต้นตำรับกับคนท้องถิ่น</p>
+                        <div class="flex items-center text-green-600">
+                            <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="text-sm">2-3 ชั่วโมง</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center gradient-text mb-4" data-th="ภาพบรรยากาศ" data-en="Gallery">ภาพบรรยากาศ</h2>
+            <p class="text-center text-gray-600 mb-12" data-th="ชมความสวยงามของเนินขามผ่านภาพถ่าย" data-en="Explore the beauty of Noen Kham through photos">ชมความสวยงามของเนินขามผ่านภาพถ่าย</p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="card-hover rounded-lg overflow-hidden">
+                    <img src="./images/watkham.png" 
+                         alt="Gallery 1" 
+                         class="w-full h-64 object-cover">
+                </div>
+                <div class="card-hover rounded-lg overflow-hidden">
+                    <img src="./images/floatingmarket.png" 
+                         alt="Gallery 2" 
+                         class="w-full h-64 object-cover">
+                </div>
+                <div class="card-hover rounded-lg overflow-hidden">
+                    <img src="./images/riverview.png" 
+                         alt="Gallery 3" 
+                         class="w-full h-64 object-cover">
+                </div>
+                <div class="card-hover rounded-lg overflow-hidden">
+                    <img src="./images/museum.png" 
+                         alt="Gallery 4" 
+                         class="w-full h-64 object-cover">
+                </div>
+                <div class="card-hover rounded-lg overflow-hidden">
+                    <img src="./images/rivercruise.png" 
+                         alt="Gallery 5" 
+                         class="w-full h-64 object-cover">
+                </div>
+                <div class="card-hover rounded-lg overflow-hidden">
+                    <img src="./images/cycling.png" 
+                         alt="Gallery 6" 
+                         class="w-full h-64 object-cover">
+                </div>
+                <div class="card-hover rounded-lg overflow-hidden">
+                    <img src="./images/cookingclass.png" 
+                         alt="Gallery 7" 
+                         class="w-full h-64 object-cover">
+                </div>
+                <div class="card-hover rounded-lg overflow-hidden">
+                    <img src="./images/park.png" 
+                         alt="Gallery 8" 
+                         class="w-full h-64 object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Homestay Section with Booking -->
+    <section id="homestay" class="section-bg py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center gradient-text mb-12" data-th="ที่พักโฮมสเตย์" data-en="Homestay">ที่พักโฮมสเตย์</h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Homestay with booking button -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <img src="../images/homestay1.png" 
+                         alt="โฮมสเตย์" 
+                         class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xl font-bold text-gray-800">บ้านสวนริมน้ำโฮมสเตย์</h3>
+                            <span class="text-yellow-500">⭐4.9/5</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            โฮมสเตย์บรรยากาศสงบริมแม่น้ำเจ้าพระยา ห้องพักสะอาด บริการเป็นกันเอง 
+                            พร้อมอาหารพื้นบ้านรสเลิศ มี WiFi, แอร์, ทีวี สิ่งอำนวยความสะดวกครบครัน
+                        </p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-green-600">800฿</span>
+                            <span class="text-gray-600">/ คืน</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-4">📍 GPS: 15.1678, 100.1789 | 📞 081 886 5454</p>
+                        <div class="flex gap-2">
+                            <a href="https://maps.app.goo.gl/4HHx3R4NK5xZCRt68" 
+                               target="_blank"
+                               class="flex-1 text-center py-2 border-2 border-green-600 text-green-600 rounded-lg hover:bg-green-50 transition">
+                                แผนที่
+                            </a>
+                            <button onclick="openBooking('บ้านสวนริมน้ำโฮมสเตย์', 800)" 
+                                    class="flex-1 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                                จองเลย (Book Now)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- More homestay items with similar structure... -->
+                
+                <!-- Homestay 2 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <img src="../images/homestay2.png" 
+                         alt="โฮมสเตย์" 
+                         class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xl font-bold text-gray-800">บ้านสวนรีสอร์ท&กาแฟสด</h3>
+                            <span class="text-yellow-500">⭐4.8/5</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            บรรยากาศร่มรื่นท่ามกลางสวนผลไม้ ห้องพักโปร่ง สะอาด มีกิจกรรมเก็บผลไม้ตามฤดูกาล 
+                            ทำอาหารพื้นบ้านร่วมกับเจ้าของบ้าน พร้อมสิ่งอำนวยความสะดวกครบครัน
+                        </p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-green-600">750฿</span>
+                            <span class="text-gray-600">/ คืน</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-4">📍 GPS: 15.1689, 100.1790 | 📞 092 393 6557</p>
+                        <div class="flex gap-2">
+                            <a href="https://maps.app.goo.gl/D2o42NCzaQRbmcEa9" 
+                               target="_blank"
+                               class="flex-1 text-center py-2 border-2 border-green-600 text-green-600 rounded-lg hover:bg-green-50 transition">
+                                แผนที่
+                            </a>
+                            <button onclick="openBooking('บ้านสวนธรรมชาติ', 750)" 
+                                    class="flex-1 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                                จองเลย (Book Now)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Homestay 3 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <img src="../images/homestay3.png" 
+                         alt="โฮมสเตย์" 
+                         class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xl font-bold text-gray-800">บ้านบ้านโฮมสเตย์</h3>
+                            <span class="text-yellow-500">⭐4.7/5</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            สัมผัสวิถีชีวิตชาวนาแท้ๆ ท่ามกลางทุ่งนาเขียวขจี มีกิจกรรมทำนา ปลูกข้าว เกี่ยวข้าว 
+                            พักผ่อนในบรรยากาศเรียบง่าย อบอุ่น พร้อมอาหารพื้นบ้านรสชาติต้นตำรับ
+                        </p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-green-600">900฿</span>
+                            <span class="text-gray-600">/ คืน</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-4">📍 GPS: 15.1700, 100.1801 | 📞 083 020 9274</p>
+                        <div class="flex gap-2">
+                            <a href="https://maps.app.goo.gl/svLFcqGra5wGs4Fn9" 
+                               target="_blank"
+                               class="flex-1 text-center py-2 border-2 border-green-600 text-green-600 rounded-lg hover:bg-green-50 transition">
+                                แผนที่
+                            </a>
+                            <button onclick="openBooking('บ้านบ้านโฮมสเตย์', 900)" 
+                                    class="flex-1 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                                จองเลย (Book Now)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Homestay 4 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <img src="../images/homestay4.png" 
+                         alt="โฮมสเตย์" 
+                         class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xl font-bold text-gray-800">พอดิบพอดี โฮมสเตย์</h3>
+                            <span class="text-yellow-500">⭐5.0/5</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            เรือนไทยโบราณอายุกว่า 100 ปี บูรณะใหม่พร้อมสิ่งอำนวยความสะดวกสมัยใหม่ 
+                            เฟอร์นิเจอร์ไม้สักทั้งหลัง บรรยากาศคลาสสิก ผสมผสานความทันสมัย พร้อมบริการระดับพรีเมียม
+                        </p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-green-600">2500฿</span>
+                            <span class="text-gray-600">/ คืน</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-4">📍 GPS: 15.1711, 100.1812 | 📞 080 622 0055</p>
+                        <div class="flex gap-2">
+                            <a href="https://maps.app.goo.gl/WkVNhQVnRc2RidhW8" 
+                               target="_blank"
+                               class="flex-1 text-center py-2 border-2 border-green-600 text-green-600 rounded-lg hover:bg-green-50 transition">
+                                แผนที่
+                            </a>
+                            <button onclick="openBooking('เรือนไม้โบราณโฮมสเตย์', 1200)" 
+                                    class="flex-1 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                                จองเลย (Book Now)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Homestay 5 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <img src="../images/homestay5.png" 
+                         alt="โฮมสเตย์" 
+                         class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xl font-bold text-gray-800">111 Resort & Spa</h3>
+                            <span class="text-yellow-500">⭐4.6/5</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            ห้องกว้าง ห้องน้ำสะดวกสบาย เตียงแข็งซึ่งบางคนชอบ การจ่ายไฟมีความไม่เสถียรเล็กน้อยแต่ก็ไม่มีปัญหา 
+                            ไม่มีการขัดจังหวะ หน้าต่างหันไปทางธรรมชาติและฟาร์ม วิวสวยในตอนเช้า
+                        </p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-green-600">850฿</span>
+                            <span class="text-gray-600">/ คืน</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-4">📍 GPS: 15.1722, 100.1823 | 📞 093-221-1022</p>
+                        <div class="flex gap-2">
+                            <a href="https://maps.app.goo.gl/BGos6awtXHgpcJAK9" 
+                               target="_blank"
+                               class="flex-1 text-center py-2 border-2 border-green-600 text-green-600 rounded-lg hover:bg-green-50 transition">
+                                แผนที่
+                            </a>
+                            <button onclick="openBooking('111 Resort & Spa', 850)" 
+                                    class="flex-1 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                                จองเลย (Book Now)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-gradient-to-br from-green-50 to-green-100">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center gradient-text mb-4" data-th="รีวิวจากนักท่องเที่ยว" data-en="Visitor Reviews">รีวิวจากนักท่องเที่ยว</h2>
+            <p class="text-center text-gray-600 mb-12" data-th="ประสบการณ์ดีๆ จากผู้ที่เคยมาเยือน" data-en="Great experiences from our visitors">ประสบการณ์ดีๆ จากผู้ที่เคยมาเยือน</p>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Review 1 -->
+                <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" 
+                             alt="Reviewer" 
+                             class="w-12 h-12 rounded-full object-cover">
+                        <div class="ml-3">
+                            <h4 class="font-bold text-gray-800">สมหญิง ใจดี</h4>
+                            <div class="text-yellow-500">⭐⭐⭐⭐⭐</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"บรรยากาศดีมาก เจ้าของบ้านน่ารัก อาหารอร่อย จะกลับมาอีกแน่นอน ห้องพักสะอาด วิวสวยมาก แนะนำเลยค่ะ"</p>
+                    <p class="text-sm text-gray-500 mt-3">พักที่: บ้านสวนริมน้ำโฮมสเตย์</p>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" 
+                             alt="Reviewer" 
+                             class="w-12 h-12 rounded-full object-cover">
+                        <div class="ml-3">
+                            <h4 class="font-bold text-gray-800">สมชาย รักเที่ยว</h4>
+                            <div class="text-yellow-500">⭐⭐⭐⭐⭐</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"ไปทำนาได้ ปั่นจักรยานชมวิว สนุกมาก ได้สัมผัสวิถีชีวิตชาวบ้านจริงๆ ประทับใจมากครับ คุ้มค่าทุกบาท"</p>
+                    <p class="text-sm text-gray-500 mt-3">พักที่: บ้านนาข้าวโฮมสเตย์</p>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop" 
+                             alt="Reviewer" 
+                             class="w-12 h-12 rounded-full object-cover">
+                        <div class="ml-3">
+                            <h4 class="font-bold text-gray-800">วรรณา สุขสันต์</h4>
+                            <div class="text-yellow-500">⭐⭐⭐⭐⭐</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"เรือนไม้โบราณสวยงามมาก ถ่ายรูปสวย บรรยากาศคลาสสิก แต่มีสิ่งอำนวยความสะดวกครบ ประทับใจค่ะ"</p>
+                    <p class="text-sm text-gray-500 mt-3">พักที่: เรือนไม้โบราณโฮมสเตย์</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Get Here Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center gradient-text mb-4" data-th="วิธีการเดินทาง" data-en="How to Get Here">วิธีการเดินทาง</h2>
+            <p class="text-center text-gray-600 mb-12" data-th="เส้นทางสู่เนินขาม จังหวัดชัยนาท" data-en="Routes to Noen Kham, Chai Nat">เส้นทางสู่เนินขาม จังหวัดชัยนาท</p>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- By Car -->
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-green-600 text-white p-3 rounded-lg">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-800 ml-4" data-th="เดินทางด้วยรถยนต์" data-en="By Car">เดินทางด้วยรถยนต์</h3>
+                        </div>
+                        <div class="space-y-3 text-gray-700">
+                            <div class="flex items-start">
+                                <span class="text-green-600 mr-2">•</span>
+                                <p><strong>จากกรุงเทพฯ:</strong> ใช้เส้นทางหลวงหมายเลข 32 (ถนนพหลโยธิน) ระยะทางประมาณ 180 กม. ใช้เวลาประมาณ 2 ชั่วโมง</p>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="text-green-600 mr-2">•</span>
+                                <p><strong>จากจังหวัดชัยนาท:</strong> ใช้ถนนสายชัยนาท-เนินขาม ระยะทางประมาณ 25 กม. ใช้เวลาประมาณ 30 นาที</p>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="text-green-600 mr-2">•</span>
+                                <p><strong>ที่จอดรถ:</strong> มีที่จอดรถฟรีที่แหล่งท่องเที่ยวและโฮมสเตย์ทุกแห่ง</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- By Public Transport -->
+                    <div class="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-blue-600 text-white p-3 rounded-lg">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-800 ml-4" data-th="รถสาธารณะ" data-en="Public Transport">รถสาธารณะ</h3>
+                        </div>
+                        <div class="space-y-3 text-gray-700">
+                            <div class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                <p><strong>รถบัส:</strong> ขึ้นรถบัสสาย 999 จากหมอชิต ไปชัยนาท แล้วต่อรถโดยสารประจำทางไปเนินขาม</p>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                <p><strong>รถไฟ:</strong> ลงสถานีชัยนาท แล้วต่อรถสองแถวหรือแท็กซี่ไปเนินขาม ราคาประมาณ 150-200 บาท</p>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                <p><strong>รถตู้:</strong> มีรถตู้จากกรุงเทพฯ (หมอชิต) ไปชัยนาท ออกทุก 30 นาที ค่าโดยสารประมาณ 120 บาท</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Map -->
+                <div class="mt-8 bg-gray-100 rounded-xl overflow-hidden">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d248028.99634285!2d99.80631!3d15.185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTXCsDExJzA2LjAiTiA5OcKwNDgnMjIuNyJF!5e0!3m2!1sen!2sth!4v1234567890"
+                        width="100%" 
+                        height="400" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center gradient-text mb-12" data-th="ติดต่อเรา" data-en="Contact Us">ติดต่อเรา</h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Contact Info with Social Media -->
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-8">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">ข้อมูลติดต่อ (Contact Information)</h3>
+                        
+                        <div class="space-y-4 mb-6">
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-green-600 text-white p-3 rounded-lg">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">ที่อยู่ (Address)</h4>
+                                    <p class="text-gray-600">อำเภอเนินขาม จังหวัดชัยนาท 17130</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-green-600 text-white p-3 rounded-lg">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">โทรศัพท์ (Phone)</h4>
+                                    <p class="text-gray-600">056-411-919</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-green-600 text-white p-3 rounded-lg">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">อีเมล (Email)</h4>
+                                    <p class="text-gray-600"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4e272028210e202b3b2f252f23602d2123">chainat@moi.go.th</a></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Social Media Links -->
+                        <div class="border-t border-green-200 pt-6">
+                            <h4 class="font-semibold text-gray-800 mb-4">ติดตามเรา (Follow Us)</h4>
+                            <div class="flex gap-3">
+                                <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg transition">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                    </svg>
+                                </a>
+                                <a href="#" class="bg-pink-600 hover:bg-pink-700 text-white p-3 rounded-lg transition">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073z"/>
+                                        <path d="M12 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4z"/>
+                                    </svg>
+                                </a>
+                                <a href="#" class="bg-green-600 hover:bg-green-700 text-white p-3 rounded-lg transition">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                                    </svg>
+                                </a>
+                                <a href="#" class="bg-sky-500 hover:bg-sky-600 text-white p-3 rounded-lg transition">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form -->
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6" data-th="ส่งข้อความถึงเรา" data-en="Send us a Message">ส่งข้อความถึงเรา</h3>
+                        
+                        <form class="space-y-4" onsubmit="handleContactForm(event)">
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">ชื่อ-นามสกุล (Name)</label>
+                                <input type="text" 
+                                       required
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-600 focus:border-transparent"
+                                       placeholder="กรุณากรอกชื่อ-นามสกุล">
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">อีเมล (Email)</label>
+                                <input type="email" 
+                                       required
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-600 focus:border-transparent"
+                                       placeholder="example@email.com">
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">โทรศัพท์ (Phone)</label>
+                                <input type="tel" 
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-600 focus:border-transparent"
+                                       placeholder="0xx-xxx-xxxx">
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">ข้อความ (Message)</label>
+                                <textarea rows="4" 
+                                          required
+                                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-600 focus:border-transparent"
+                                          placeholder="กรุณากรอกข้อความของคุณ"></textarea>
+                            </div>
+
+                            <button type="submit" 
+                                    class="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-700 text-white font-medium py-3 px-6 rounded-lg transition shadow-lg">
+                                ส่งข้อความ (Send Message)
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-gradient-to-br from-green-50 to-green-100">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center gradient-text mb-4" data-th="คำถามที่พบบ่อย" data-en="Frequently Asked Questions">คำถามที่พบบ่อย</h2>
+            <p class="text-center text-gray-600 mb-12" data-th="คำตอบสำหรับคำถามที่นักท่องเที่ยวมักถามบ่อย" data-en="Answers to common questions from visitors">คำตอบสำหรับคำถามที่นักท่องเที่ยวมักถามบ่อย</p>
+            
+            <div class="max-w-3xl mx-auto space-y-4">
+                <!-- FAQ 1 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <button onclick="toggleFAQ(1)" class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-green-50 transition">
+                        <span class="font-bold text-gray-800">เนินขามอยู่ห่างจากกรุงเทพฯ กี่กิโลเมตร?</span>
+                        <svg id="faq-icon-1" class="w-6 h-6 text-green-600 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div id="faq-content-1" class="hidden px-6 py-4 bg-green-50">
+                        <p class="text-gray-700">เนินขามอยู่ห่างจากกรุงเทพฯ ประมาณ 180 กิโลเมตร ใช้เวลาเดินทางด้วยรถยนต์ประมาณ 2 ชั่วโมง ผ่านทางหลวงหมายเลข 32 (ถนนพหลโยธิน)</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <button onclick="toggleFAQ(2)" class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-green-50 transition">
+                        <span class="font-bold text-gray-800">ช่วงเวลาไหนเหมาะที่สุดในการมาท่องเที่ยว?</span>
+                        <svg id="faq-icon-2" class="w-6 h-6 text-green-600 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div id="faq-content-2" class="hidden px-6 py-4 bg-green-50">
+                        <p class="text-gray-700">ช่วงเดือนพฤศจิกายน-กุมภาพันธ์ เป็นช่วงที่อากาศดีที่สุด ไม่ร้อนจัด เหมาะกับการท่องเที่ยว หากต้องการเห็นทุ่งนาสีเขียวสดใส แนะนำช่วงฤดูฝน (มิถุนายน-ตุลาคม)</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <button onclick="toggleFAQ(3)" class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-green-50 transition">
+                        <span class="font-bold text-gray-800">ต้องจองโฮมสเตย์ล่วงหน้ากี่วัน?</span>
+                        <svg id="faq-icon-3" class="w-6 h-6 text-green-600 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div id="faq-content-3" class="hidden px-6 py-4 bg-green-50">
+                        <p class="text-gray-700">แนะนำให้จองล่วงหน้าอย่างน้อย 3-7 วัน โดยเฉพาะในช่วงวันหยุดยาว หรือเทศกาลสำคัญ ควรจองล่วงหน้า 2-4 สัปดาห์ เพื่อความแน่นอนและได้ที่พักตามต้องการ</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <button onclick="toggleFAQ(4)" class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-green-50 transition">
+                        <span class="font-bold text-gray-800">มีกิจกรรมอะไรให้ทำบ้าง?</span>
+                        <svg id="faq-icon-4" class="w-6 h-6 text-green-600 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div id="faq-content-4" class="hidden px-6 py-4 bg-green-50">
+                        <p class="text-gray-700">มีกิจกรรมหลากหลาย เช่น ล่องเรือชมวิวแม่น้ำเจ้าพระยา เรียนรู้การทำนา ปั่นจักรยานชมทุ่งนา เรียนทำอาหารพื้นบ้าน เก็บผลไม้ตามฤดูกาล ชมวัดและพิพิธภัณฑ์ท้องถิ่น</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 5 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <button onclick="toggleFAQ(5)" class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-green-50 transition">
+                        <span class="font-bold text-gray-800">ควรพักกี่คืนถึงจะเพียงพอ?</span>
+                        <svg id="faq-icon-5" class="w-6 h-6 text-green-600 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div id="faq-content-5" class="hidden px-6 py-4 bg-green-50">
+                        <p class="text-gray-700">แนะนำให้พัก 2-3 คืน เพื่อให้มีเวลาเที่ยวชมแหล่งท่องเที่ยวได้อย่างเต็มที่ และสัมผัสวิถีชีวิตท้องถิ่นอย่างแท้จริง ไม่เร่งรีบ ได้พักผ่อนและผ่อนคลาย</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 6 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <button onclick="toggleFAQ(6)" class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-green-50 transition">
+                        <span class="font-bold text-gray-800">มีร้านสะดวกซื้อหรือตู้ ATM ไหม?</span>
+                        <svg id="faq-icon-6" class="w-6 h-6 text-green-600 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div id="faq-content-6" class="hidden px-6 py-4 bg-green-50">
+                        <p class="text-gray-700">มีร้านสะดวกซื้อและตู้ ATM ในตัวอำเภอ ห่างจากพื้นที่ท่องเที่ยวประมาณ 5-10 นาที แนะนำให้เตรียมเงินสดไว้บ้าง เพราะร้านค้าบางแห่งอาจรับเฉพาะเงินสด</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-16 bg-gradient-to-r from-green-600 to-green-700">
+        <div class="container mx-auto px-6">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4" data-th="รับข่าวสารและโปรโมชั่น" data-en="Subscribe for News & Promotions">
+                    รับข่าวสารและโปรโมชั่น
+                </h2>
+                <p class="text-amber-100 mb-8" data-th="ติดตามข้อมูลท่องเที่ยว กิจกรรม และโปรโมชั่นพิเศษจากเรา" data-en="Stay updated with travel info, activities, and special promotions">
+                    ติดตามข้อมูลท่องเที่ยว กิจกรรม และโปรโมชั่นพิเศษจากเรา
+                </p>
+                <form onsubmit="subscribeNewsletter(event)" class="flex flex-col md:flex-row gap-3 max-w-xl mx-auto">
+                    <input 
+                        type="email" 
+                        required
+                        placeholder="กรอกอีเมลของคุณ / Enter your email"
+                        class="flex-1 px-6 py-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-white">
+                    <button 
+                        type="submit"
+                        class="px-8 py-4 bg-white text-green-600 font-bold rounded-lg hover:bg-green-50 transition">
+                        <span data-th="สมัครรับข่าวสาร" data-en="Subscribe">สมัครรับข่าวสาร</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-green-800 to-green-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">Neuakam</h3>
+                    <p class="text-amber-100" data-th="แหล่งท่องเที่ยวเชิงวัฒนธรรมและธรรมชาติ อำเภอเนินขาม จังหวัดชัยนาท" data-en="Cultural and Natural Tourism Noen Kham District, Chai Nat">
+                        แหล่งท่องเที่ยวเชิงวัฒนธรรมและธรรมชาติ 
+                        อำเภอเนินขาม จังหวัดชัยนาท
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-4" data-th="ลิงก์ด่วน" data-en="Quick Links">ลิงก์ด่วน</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-amber-100 hover:text-white transition">หน้าแรก (Home)</a></li>
+                        <li><a href="#attractions" class="text-amber-100 hover:text-white transition">แหล่งท่องเที่ยว (Attractions)</a></li>
+                        <li><a href="#food" class="text-amber-100 hover:text-white transition">อาหารพื้นบ้าน (Food)</a></li>
+                        <li><a href="#homestay" class="text-amber-100 hover:text-white transition">ที่พักโฮมสเตย์ (Homestay)</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-4" data-th="ติดต่อเรา" data-en="Contact">ติดต่อเรา</h4>
+                    <p class="text-amber-100 mb-2">📞 056-411-919</p>
+                    <p class="text-amber-100 mb-2">✉️ <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="026b6c646d426c67776369636f2c616d6f">chainat@moi.go.th </a></p>
+                    <p class="text-amber-100">📍 อำเภอเนินขาม จ.ชัยนาท 17130</p>
+                </div>
+            </div>
+            
+            <div class="border-t border-amber-700 pt-8 text-center text-amber-100">
+                <p>© 2024 Neuakam Tourism. All rights reserved. | Designed with ❤️ for Noen Kham</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chatbot Button -->
+    <div class="chatbot-button" onclick="toggleChatbot()">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+        </svg>
+    </div>
+
+    <!-- Chatbot Window -->
+    <div class="chatbot-window" id="chatbotWindow">
+        <div class="bg-gradient-to-r from-green-600 to-green-700 p-4 rounded-t-xl flex justify-between items-center">
+            <h3 class="text-white font-bold">Neuakam Assistant</h3>
+            <button onclick="toggleChatbot()" class="text-white hover:text-gray-200">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="flex-1 p-4 overflow-y-auto" id="chatMessages">
+            <div class="bg-gray-100 rounded-lg p-3 mb-3">
+                <p class="text-sm">สวัสดีค่ะ! ยินดีต้อนรับสู่เนินขาม มีอะไรให้ช่วยไหมคะ?</p>
+                <p class="text-sm mt-2">Hello! Welcome to Noen Kham. How can I help you?</p>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+                <button onclick="quickReply('แนะนำที่เที่ยว')" class="bg-green-100 hover:bg-amber-200 p-2 rounded text-sm transition">🏛️ แนะนำที่เที่ยว</button>
+                <button onclick="quickReply('แนะนำร้านอาหาร')" class="bg-green-100 hover:bg-amber-200 p-2 rounded text-sm transition">🍜 แนะนำร้านอาหาร</button>
+                <button onclick="quickReply('จองที่พัก')" class="bg-green-100 hover:bg-amber-200 p-2 rounded text-sm transition">🏠 จองที่พัก</button>
+                <button onclick="quickReply('ถามเส้นทาง')" class="bg-green-100 hover:bg-amber-200 p-2 rounded text-sm transition">🗺️ ถามเส้นทาง</button>
+            </div>
+        </div>
+        <div class="p-4 border-t">
+            <div class="flex gap-2">
+                <input type="text" 
+                       id="chatInput"
+                       class="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
+                       placeholder="พิมพ์ข้อความ...">
+                <button onclick="sendMessage()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div class="booking-modal" id="bookingModal">
+        <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">จองที่พัก (Book Accommodation)</h3>
+                <button onclick="closeBooking()" class="text-gray-500 hover:text-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <form onsubmit="submitBooking(event)" class="space-y-4">
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">ที่พัก (Homestay)</label>
+                    <input type="text" id="homestayName" readonly class="w-full px-4 py-2 border rounded-lg bg-gray-50">
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">เช็คอิน (Check-in)</label>
+                        <input type="date" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-amber-600">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">เช็คเอาท์ (Check-out)</label>
+                        <input type="date" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-amber-600">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">จำนวนผู้เข้าพัก (Guests)</label>
+                    <select class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-amber-600">
+                        <option>1 ท่าน</option>
+                        <option>2 ท่าน</option>
+                        <option>3 ท่าน</option>
+                        <option>4 ท่าน</option>
+                        <option>5+ ท่าน</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">ชื่อผู้จอง (Name)</label>
+                    <input type="text" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-amber-600">
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">เบอร์โทร (Phone)</label>
+                    <input type="tel" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-amber-600">
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">อีเมล (Email)</label>
+                    <input type="email" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-amber-600">
+                </div>
+                
+                <div class="flex gap-3 pt-4">
+                    <button type="button" onclick="closeBooking()" class="flex-1 py-3 border-2 border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                        ยกเลิก (Cancel)
+                    </button>
+                    <button type="submit" class="flex-1 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                        ยืนยันการจอง (Confirm Booking)
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" onclick="scrollToTop()" class="hidden fixed bottom-100 right-30 bg-green-600 hover:bg-green-700 text-white p-4 rounded-full shadow-lg transition-all duration-300 z-50" style="bottom: 100px; right: 30px;">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+    </button>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Page loading
+        window.addEventListener('load', () => {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            setTimeout(() => {
+                loadingOverlay.classList.add('hidden');
+            }, 500);
+        });
+
+        // Scroll progress bar
+        window.addEventListener('scroll', () => {
+            const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (window.scrollY / windowHeight) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // FAQ toggle function
+        function toggleFAQ(id) {
+            const content = document.getElementById(`faq-content-${id}`);
+            const icon = document.getElementById(`faq-icon-${id}`);
+            
+            content.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+
+        // Mobile menu toggle
+        function toggleMenu() {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        }
+
+        // Chatbot functions
+        function toggleChatbot() {
+            document.getElementById('chatbotWindow').classList.toggle('active');
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (message) {
+                const chatMessages = document.getElementById('chatMessages');
+                chatMessages.innerHTML += `
+                    <div class="bg-green-100 rounded-lg p-3 mb-3 ml-12">
+                        <p class="text-sm">${message}</p>
+                    </div>
+                    <div class="bg-gray-100 rounded-lg p-3 mb-3 mr-12">
+                        <p class="text-sm">ขอบคุณสำหรับข้อความค่ะ ทีมงานจะติดต่อกลับเร็วๆ นี้</p>
+                        <p class="text-sm mt-1">Thank you for your message. We'll get back to you soon!</p>
+                    </div>
+                `;
+                input.value = '';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        }
+
+        function quickReply(topic) {
+            const responses = {
+                'แนะนำที่เที่ยว': 'เนินขามมีสถานที่ท่องเที่ยวน่าสนใจมากมาย เช่น วัดเนินขาม ตลาดน้ำ และแม่น้ำเจ้าพระยา คุณสนใจสถานที่ไหนเป็นพิเศษคะ?',
+                'แนะนำร้านอาหาร': 'เรามีร้านอาหารพื้นบ้านมากมาย แนะนำ ร้านป้าสมหมูย่าง และส้มตำป้าจันทร์เป็นพิเศษค่ะ อร่อยมากเลยค่ะ!',
+                'จองที่พัก': 'เรามีโฮมสเตย์ให้เลือกหลายแห่งค่ะ ราคาตั้งแต่ 750-1,200 บาทต่อคืน คุณสามารถกดปุ่ม "จองเลย" ในหน้าที่พักได้เลยค่ะ',
+                'ถามเส้นทาง': 'จากกรุงเทพฯ ใช้เส้นทางหลวงหมายเลข 32 ประมาณ 2 ชั่วโมง หรือคุณสามารถคลิกดูแผนที่ใน Google Maps ได้เลยค่ะ'
+            };
+            
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML += `
+                <div class="bg-green-100 rounded-lg p-3 mb-3 ml-12">
+                    <p class="text-sm">${topic}</p>
+                </div>
+                <div class="bg-gray-100 rounded-lg p-3 mb-3 mr-12">
+                    <p class="text-sm">${responses[topic]}</p>
+                </div>
+            `;
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Booking functions
+        function openBooking(name, price) {
+            document.getElementById('homestayName').value = name + ' - ฿' + price + '/คืน';
+            document.getElementById('bookingModal').classList.add('active');
+        }
+
+        function closeBooking() {
+            document.getElementById('bookingModal').classList.remove('active');
+        }
+
+        function submitBooking(e) {
+            e.preventDefault();
+            alert('ขอบคุณสำหรับการจอง! เราจะติดต่อกลับเร็วๆ นี้\n\nThank you for your booking! We will contact you soon.');
+            closeBooking();
+        }
+
+        // Contact form
+        function handleContactForm(e) {
+            e.preventDefault();
+            alert('ขอบคุณสำหรับข้อความ! เราจะติดต่อกลับเร็วๆ นี้\n\nThank you for your message! We will get back to you soon.');
+            e.target.reset();
+        }
+
+        // Newsletter subscription
+        function subscribeNewsletter(e) {
+            e.preventDefault();
+            const email = e.target.querySelector('input[type="email"]').value;
+            alert(`ขอบคุณที่สมัครรับข่าวสาร!\nเราได้ส่งอีเมลยืนยันไปที่ ${email} แล้ว\n\nThank you for subscribing!\nWe've sent a confirmation email to ${email}`);
+            e.target.reset();
+        }
+
+        // Language switcher
+        let currentLang = 'th';
+        function switchLanguage(lang) {
+            currentLang = lang;
+            document.getElementById('lang-th').className = lang === 'th' 
+                ? 'px-4 py-2 bg-green-600 rounded-l-lg text-white font-medium'
+                : 'px-4 py-2 bg-white rounded-l-lg border border-green-600 text-green-600 font-medium';
+            document.getElementById('lang-en').className = lang === 'en'
+                ? 'px-4 py-2 bg-green-600 rounded-r-lg text-white font-medium'
+                : 'px-4 py-2 bg-white rounded-r-lg border border-green-600 text-green-600 font-medium';
+            
+            // Update all elements with data-th and data-en attributes
+            document.querySelectorAll('[data-th][data-en]').forEach(el => {
+                el.textContent = el.getAttribute('data-' + lang);
+            });
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                    document.getElementById('mobileMenu').classList.add('hidden');
+                }
+            });
+        });
+
+        // Active nav link on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Show/hide back to top button
+            const backToTop = document.getElementById('backToTop');
+            if (window.pageYOffset > 300) {
+                backToTop.classList.remove('hidden');
+            } else {
+                backToTop.classList.add('hidden');
+            }
+        });
+
+        // Back to top function
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
