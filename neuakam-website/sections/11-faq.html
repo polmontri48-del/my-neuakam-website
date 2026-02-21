@@ -1,0 +1,87 @@
+<!-- FAQ Section -->
+<section class="py-20 bg-gradient-to-br from-amber-50 to-orange-50">
+    <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-bold text-center gradient-text mb-4" data-th="คำถามที่พบบ่อย" data-en="Frequently Asked Questions">คำถามที่พบบ่อย</h2>
+        <p class="text-center text-gray-600 mb-12" data-th="คำตอบสำหรับคำถามที่นักท่องเที่ยวมักถามบ่อย" data-en="Answers to common questions from visitors">คำตอบสำหรับคำถามที่นักท่องเที่ยวมักถามบ่อย</p>
+        
+        <div class="max-w-3xl mx-auto space-y-4">
+            <!-- FAQ 1 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <button onclick="toggleFAQ(1)" class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-amber-50 transition">
+                    <span class="font-bold text-gray-800">เนินขามอยู่ห่างจากกรุงเทพฯ กี่กิโลเมตร?</span>
+                    <svg id="faq-icon-1" class="w-6 h-6 text-amber-600 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div id="faq-content-1" class="hidden px-6 py-4 bg-amber-50">
+                    <p class="text-gray-700">เนินขามอยู่ห่างจากกรุงเทพฯ ประมาณ 180 กิโลเมตร ใช้เวลาเดินทางด้วยรถยนต์ประมาณ 2 ชั่วโมง ผ่านทางหลวงหมายเลข 32 (ถนนพหลโยธิน)</p>
+                </div>
+            </div>
+
+            <!-- FAQ 2 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <button onclick="toggleFAQ(2)" class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-amber-50 transition">
+                    <span class="font-bold text-gray-800">ช่วงเวลาไหนเหมาะที่สุดในการมาท่องเที่ยว?</span>
+                    <svg id="faq-icon-2" class="w-6 h-6 text-amber-600 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div id="faq-content-2" class="hidden px-6 py-4 bg-amber-50">
+                    <p class="text-gray-700">ช่วงเดือนพฤศจิกายน-กุมภาพันธ์ เป็นช่วงที่อากาศดีที่สุด ไม่ร้อนจัด เหมาะกับการท่องเที่ยว หากต้องการเห็นทุ่งนาสีเขียวสดใส แนะนำช่วงฤดูฝน (มิถุนายน-ตุลาคม)</p>
+                </div>
+            </div>
+
+            <!-- FAQ 3 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <button onclick="toggleFAQ(3)" class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-amber-50 transition">
+                    <span class="font-bold text-gray-800">ต้องจองโฮมสเตย์ล่วงหน้ากี่วัน?</span>
+                    <svg id="faq-icon-3" class="w-6 h-6 text-amber-600 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div id="faq-content-3" class="hidden px-6 py-4 bg-amber-50">
+                    <p class="text-gray-700">แนะนำให้จองล่วงหน้าอย่างน้อย 3-7 วัน โดยเฉพาะในช่วงวันหยุดยาว หรือเทศกาลสำคัญ ควรจองล่วงหน้า 2-4 สัปดาห์ เพื่อความแน่นอนและได้ที่พักตามต้องการ</p>
+                </div>
+            </div>
+
+            <!-- FAQ 4 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <button onclick="toggleFAQ(4)" class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-amber-50 transition">
+                    <span class="font-bold text-gray-800">มีกิจกรรมอะไรให้ทำบ้าง?</span>
+                    <svg id="faq-icon-4" class="w-6 h-6 text-amber-600 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div id="faq-content-4" class="hidden px-6 py-4 bg-amber-50">
+                    <p class="text-gray-700">มีกิจกรรมหลากหลาย เช่น ล่องเรือชมวิวแม่น้ำเจ้าพระยา เรียนรู้การทำนา ปั่นจักรยานชมทุ่งนา เรียนทำอาหารพื้นบ้าน เก็บผลไม้ตามฤดูกาล ชมวัดและพิพิธภัณฑ์ท้องถิ่น</p>
+                </div>
+            </div>
+
+            <!-- FAQ 5 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <button onclick="toggleFAQ(5)" class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-amber-50 transition">
+                    <span class="font-bold text-gray-800">ควรพักกี่คืนถึงจะเพียงพอ?</span>
+                    <svg id="faq-icon-5" class="w-6 h-6 text-amber-600 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div id="faq-content-5" class="hidden px-6 py-4 bg-amber-50">
+                    <p class="text-gray-700">แนะนำให้พัก 2-3 คืน เพื่อให้มีเวลาเที่ยวชมแหล่งท่องเที่ยวได้อย่างเต็มที่ และสัมผัสวิถีชีวิตท้องถิ่นอย่างแท้จริง ไม่เร่งรีบ ได้พักผ่อนและผ่อนคลาย</p>
+                </div>
+            </div>
+
+            <!-- FAQ 6 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <button onclick="toggleFAQ(6)" class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-amber-50 transition">
+                    <span class="font-bold text-gray-800">มีร้านสะดวกซื้อหรือตู้ ATM ไหม?</span>
+                    <svg id="faq-icon-6" class="w-6 h-6 text-amber-600 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div id="faq-content-6" class="hidden px-6 py-4 bg-amber-50">
+                    <p class="text-gray-700">มีร้านสะดวกซื้อและตู้ ATM ในตัวอำเภอ ห่างจากพื้นที่ท่องเที่ยวประมาณ 5-10 นาที แนะนำให้เตรียมเงินสดไว้บ้าง เพราะร้านค้าบางแห่งอาจรับเฉพาะเงินสด</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

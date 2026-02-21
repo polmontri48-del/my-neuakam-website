@@ -1,0 +1,207 @@
+<!-- Homestay Section with Booking -->
+<section id="homestay" class="section-bg py-20">
+    <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-bold text-center gradient-text mb-4" data-th="ที่พักโฮมสเตย์" data-en="Homestay Accommodations">ที่พักโฮมสเตย์</h2>
+        <p class="text-center text-gray-600 mb-12" data-th="ที่พักสัตเทพ อบอุ่น สะดวกสบาย" data-en="Comfortable and welcoming homestays">ที่พักสัตเทพ อบอุ่น สะดวกสบาย</p>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Homestay 1 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                <img src="https://images.unsplash.com/photo-1570129477492-45ac003d2b2b?w=600&h=350&fit=crop" 
+                     alt="บ้านสวนริมน้ำโฮมสเตย์" 
+                     class="w-full h-56 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-xl font-bold text-gray-800">บ้านสวนริมน้ำโฮมสเตย์</h3>
+                        <span class="text-yellow-500">⭐4.8/5</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        บ้านไม้โบราณสไตล์ไทยที่สวยงาม ตั้งอยู่ริมแม่น้ำเจ้าพระยา มีวิวแม่น้ำที่สวยงาม
+                        ห้องพักสะอาด สะดวกสบาย มีระเบียงนั่งเล่นเพื่อชมวิว อาหารเช้าแบบบ้านเรือน
+                    </p>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-2xl font-bold text-amber-600">1,200฿</span>
+                        <span class="text-gray-600">/ คืน</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-4">📍 GPS: 15.1760, 100.1840 | 📞 089-123-4567</p>
+                    <div class="flex gap-2">
+                        <a href="https://www.google.com/maps/search/?api=1&query=15.1760,100.1840" 
+                           target="_blank"
+                           class="flex-1 text-center py-2 border-2 border-amber-600 text-amber-600 rounded-lg hover:bg-amber-50 transition">
+                            แผนที่
+                        </a>
+                        <button onclick="openBooking('บ้านสวนริมน้ำโฮมสเตย์', 1200)" 
+                                class="flex-1 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition">
+                            จองเลย (Book Now)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Homestay 2 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&h=350&fit=crop" 
+                     alt="บ้านนาข้าวโฮมสเตย์" 
+                     class="w-full h-56 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-xl font-bold text-gray-800">บ้านนาข้าวโฮมสเตย์</h3>
+                        <span class="text-yellow-500">⭐4.7/5</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        บ้านตั้งอยู่ท่ามกลางทุ่งนาข้าว เหมาะแก่การสัมผัสวิถีชีวิตการเกษตร 
+                        มีกิจกรรมทำนา เก็บข้าว และปั่นจักรยานชมทุ่งนา มีห้องพักสะดวกสบาย ครอบครัวใจดี
+                    </p>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-2xl font-bold text-amber-600">950฿</span>
+                        <span class="text-gray-600">/ คืน</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-4">📍 GPS: 15.1815, 100.1925 | 📞 087-456-7890</p>
+                    <div class="flex gap-2">
+                        <a href="https://www.google.com/maps/search/?api=1&query=15.1815,100.1925" 
+                           target="_blank"
+                           class="flex-1 text-center py-2 border-2 border-amber-600 text-amber-600 rounded-lg hover:bg-amber-50 transition">
+                            แผนที่
+                        </a>
+                        <button onclick="openBooking('บ้านนาข้าวโฮมสเตย์', 950)" 
+                                class="flex-1 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition">
+                            จองเลย (Book Now)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Homestay 3 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                <img src="https://images.unsplash.com/photo-1598631050042-b6f3b0c4688a?w=600&h=350&fit=crop" 
+                     alt="เรือนไม้โบราณโฮมสเตย์" 
+                     class="w-full h-56 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-xl font-bold text-gray-800">เรือนไม้โบราณโฮมสเตย์</h3>
+                        <span class="text-yellow-500">⭐4.9/5</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        เรือนไม้โบราณสไตล์ไทยลีลาเดิม บ่อสำหรับพักผ่อน มีให้บริการครอบครัว เป็นกันเอง
+                        ห้องพักโล่งสบาย เฟอร์นิเจอร์ไม้โบราณ บรรยากาศหนึ่งเดียว ถ่ายรูปสวย
+                    </p>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-2xl font-bold text-amber-600">1,100฿</span>
+                        <span class="text-gray-600">/ คืน</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-4">📍 GPS: 15.1685, 100.1755 | 📞 088-901-2345</p>
+                    <div class="flex gap-2">
+                        <a href="https://www.google.com/maps/search/?api=1&query=15.1685,100.1755" 
+                           target="_blank"
+                           class="flex-1 text-center py-2 border-2 border-amber-600 text-amber-600 rounded-lg hover:bg-amber-50 transition">
+                            แผนที่
+                        </a>
+                        <button onclick="openBooking('เรือนไม้โบราณโฮมสเตย์', 1100)" 
+                                class="flex-1 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition">
+                            จองเลย (Book Now)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Homestay 4 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                <img src="https://images.unsplash.com/photo-1518733759489-4a57e636c078?w=600&h=350&fit=crop" 
+                     alt="บ้านชุมชนนักท่องเที่ยว" 
+                     class="w-full h-56 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-xl font-bold text-gray-800">บ้านชุมชนนักท่องเที่ยว</h3>
+                        <span class="text-yellow-500">⭐4.6/5</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        บ้านที่รักษาศิลปะและวัฒนธรรมท้องถิ่น มีงานหัตถกรรม ผ้าทอที่สวยงาม
+                        ท่านจะสาม้องสอนและซื้อผลิตภัณฑ์ของชุมชนได้ ห้องพักสะดวก บรรยากาศสุดฟิ่ง
+                    </p>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-2xl font-bold text-amber-600">800฿</span>
+                        <span class="text-gray-600">/ คืน</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-4">📍 GPS: 15.1750, 100.1820 | 📞 086-234-5678</p>
+                    <div class="flex gap-2">
+                        <a href="https://www.google.com/maps/search/?api=1&query=15.1750,100.1820" 
+                           target="_blank"
+                           class="flex-1 text-center py-2 border-2 border-amber-600 text-amber-600 rounded-lg hover:bg-amber-50 transition">
+                            แผนที่
+                        </a>
+                        <button onclick="openBooking('บ้านชุมชนนักท่องเที่ยว', 800)" 
+                                class="flex-1 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition">
+                            จองเลย (Book Now)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Homestay 5 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                <img src="https://images.unsplash.com/photo-1522937556297-1a2f0e40fba8?w=600&h=350&fit=crop" 
+                     alt="บ้านการแสงท้องถิ่น" 
+                     class="w-full h-56 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-xl font-bold text-gray-800">บ้านการแสงท้องถิ่น</h3>
+                        <span class="text-yellow-500">⭐4.7/5</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        บ้านมีห้องเรียนการแสง และงานศิลปะ พรศิลป์ยืดหยุ่นกับประเพณีท้องถิ่น 
+                        ท่านจะได้เรียนรู้ปฏิบัติการศิลปะตามกรรมวิธีดั้งเดิม มีห้องพักที่โปรดปรานสำหรับนักเรียน
+                    </p>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-2xl font-bold text-amber-600">900฿</span>
+                        <span class="text-gray-600">/ คืน</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-4">📍 GPS: 15.1800, 100.1800 | 📞 085-567-8901</p>
+                    <div class="flex gap-2">
+                        <a href="https://www.google.com/maps/search/?api=1&query=15.1800,100.1800" 
+                           target="_blank"
+                           class="flex-1 text-center py-2 border-2 border-amber-600 text-amber-600 rounded-lg hover:bg-amber-50 transition">
+                            แผนที่
+                        </a>
+                        <button onclick="openBooking('บ้านการแสงท้องถิ่น', 900)" 
+                                class="flex-1 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition">
+                            จองเลย (Book Now)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Homestay 6 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&h=350&fit=crop" 
+                     alt="บ้านสวนมะม่วงโฮมสเตย์" 
+                     class="w-full h-56 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-xl font-bold text-gray-800">บ้านสวนมะม่วงโฮมสเตย์</h3>
+                        <span class="text-yellow-500">⭐4.6/5</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        ท่ามกลางสวนมะม่วงกว่า 100 ต้น ห้องพักสะอาด สะดวกสบาย มีกิจกรรมชิมและเก็บมะม่วงตามฤดูกาล 
+                        ทำน้ำมะม่วงสด ของฝากมะม่วงตากพิเศษ บรรยากาศร่มรื่น เงียบสงบ
+                    </p>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-2xl font-bold text-amber-600">850฿</span>
+                        <span class="text-gray-600">/ คืน</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-4">📍 GPS: 15.1722, 100.1823 | 📞 088-678-9012</p>
+                    <div class="flex gap-2">
+                        <a href="https://www.google.com/maps/search/?api=1&query=15.1722,100.1823" 
+                           target="_blank"
+                           class="flex-1 text-center py-2 border-2 border-amber-600 text-amber-600 rounded-lg hover:bg-amber-50 transition">
+                            แผนที่
+                        </a>
+                        <button onclick="openBooking('บ้านสวนมะม่วงโฮมสเตย์', 850)" 
+                                class="flex-1 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition">
+                            จองเลย (Book Now)
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
